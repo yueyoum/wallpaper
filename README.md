@@ -56,20 +56,33 @@
 `recommend`: 推荐分类ID
 
 
-### `/category/?id=<Int>&mode=<Int>&page=<Int>&limit=<Int>`
+### `/category/?id=<Int>&mode=<Int>&boundary=<Int>&size=<Int>`
 
 获取某一分类下的图片
 
 *   `id`: 分类ID
 *   `mode`: 模式， 1 - 最新； 2 - 最热
-*   `page`: 页面， 可以省略，默认1
-*   `limit`： 每页数据量， 可以省略，默认60
+*   `boundary`: 边界
+*   `size`： 每页数据量
+    
+    **NOTE:** 处于性能考虑，这个用的是 边界 的形式来分页。举例如下：
+
+    1.  对于第一页的请求，boundary不传.
+    2.  当客户端已经获取到数据后，如果要获取新的数据，
+        那么，就把最后的项目的 边界值 作为 `boundary` 的参数。
+
+        比如，按照最新排序，要向后翻页，那么 boundary 就是本页最后一个条目的 timestam。
+        size 为整数，其绝对值就是要获取条目的数量。
+
+        比如，按章最热排序，要向前翻页，那么 boundary 就是本页第一个条目的 downloads。
+        size 为负数，其绝对值就是要获取条目的数量。
+
 
 返回:
 
     [
-        {'id': <String>, 'url': <String>, 'downloads': <Int>},
-        {'id': <String>, 'url': <String>, 'downloads': <Int>},
+        {'id': <String>, 'url': <String>, 'timestamp': <Int>, 'downloads': <Int>},
+        {'id': <String>, 'url': <String>, 'timestamp': <Int>, 'downloads': <Int>},
         ...
     ]
 
@@ -77,6 +90,7 @@
 
 *   `id`: 图片ID
 *   `url`: 图片URL
+*   `timestamp`: 时间戳 (UTC时间)
 *   `downloads`: 下载量（hot的依据）
 
 
