@@ -15,9 +15,11 @@
 
 4.  客户端每个请求都需要在 http header 中添加两个字段:
 
-    X-WALLPAPER-DEVICE: <String>    设备唯一ID
+    `X-WALLPAPER-DEVICE: <String>`    设备唯一ID
 
-    X-WALLPAPER-APPID: <Int>        APP ID
+    `X-WALLPAPER-APPID: <Int>`        APP ID
+
+    `X-WALLPAPER-VERSION: <Int>`      APP 版本号. 后台可以根据配置检测到此请求是否来自新版本
 
 
 5.  错误代码放在返回的http status code中. 见下面的错误码
