@@ -1,6 +1,6 @@
 ## 约定
 
-1.  所有请求都走HTPS，并且使用POST方式
+1.  所有请求都走HTTPS，并且使用POST方式
 
 
 2.  HTTPS 服务器开启了强制客户端认证，需要客户端把证书文件打包在应用内，才可以访问到服务器.
@@ -83,14 +83,16 @@
 返回:
 
     [
-        {'id': <String>, 'url': <String>, 'timestamp': <Int>, 'downloads': <Int>},
-        {'id': <String>, 'url': <String>, 'timestamp': <Int>, 'downloads': <Int>},
+        {'id': <String>, 'width': <Int>, 'height': <Int>, 'url': <String>, 'timestamp': <Int>, 'downloads': <Int>},
+        {'id': <String>, 'width': <Int>, 'height': <Int>, 'url': <String>, 'timestamp': <Int>, 'downloads': <Int>},
         ...
     ]
 
 返回列表，如果空，表示当前page没有数据
 
 *   `id`: 图片ID
+*   `width`: 宽度（像素）
+*   `height`: 高度（像素）
 *   `url`: 图片URL
 *   `timestamp`: 时间戳 (UTC时间)
 *   `downloads`: 下载量（hot的依据）
