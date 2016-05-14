@@ -13,7 +13,7 @@
     后台会配置此app id 所包含的分类ID，以及推荐ID
 
 
-4.  客户端每个请求都需要在 http header 中添加两个字段:
+4.  客户端每个请求都需要在 http header 中添加以下字段:
 
     `X-WALLPAPER-DEVICE: <String>`    设备唯一ID
 
@@ -39,8 +39,8 @@
 
     {
         'categories': [
-                    {'id': <Int>, 'name': <String>, 'url': <String>},
-                    {'id': <Int>, 'name': <String>, 'url': <String>},
+                    {'id': <Int>, 'name': <String>, 'url': [<String>, <String> ...]},
+                    {'id': <Int>, 'name': <String>, 'url': [<String>, <String> ...]},
                     ...
                 ],
 
@@ -51,7 +51,7 @@
 
 *   `id`: 分类ID
 *   `name`: 分类名字
-*   `url`: 分类图片 （取此分类的最新一张图片）
+*   `url`: 分类图片 （取此分类的前几张图片）
 
 `recommend`: 推荐分类ID
 
@@ -65,17 +65,19 @@
 *   `boundary`: 边界
 *   `size`： 每页数据量
     
-    **NOTE:** 处于性能考虑，这个用的是 边界 的形式来分页。举例如下：
+    **NOTE:** 出于性能考虑，这个用的是 边界 的形式来分页。举例如下：
 
     1.  对于第一页的请求，boundary不传.
     2.  当客户端已经获取到数据后，如果要获取新的数据，
         那么，就把最后的项目的 边界值 作为 `boundary` 的参数。
 
-        比如，按照最新排序，要向后翻页，那么 boundary 就是本页最后一个条目的 timestam。
+        比如，按照最新排序，要向后翻页，那么 boundary 就是本页最后一个条目的 timestamp。
         size 为整数，其绝对值就是要获取条目的数量。
 
         比如，按章最热排序，要向前翻页，那么 boundary 就是本页第一个条目的 downloads。
         size 为负数，其绝对值就是要获取条目的数量。
+
+        **NOTE:** size 的绝对值上限是 100， 也就是size的范围是 (-100, 100)
 
 
 返回:
